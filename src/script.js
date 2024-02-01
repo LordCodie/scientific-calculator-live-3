@@ -6,37 +6,54 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentValue = '';
 
     function evaluateResult() {
-      const convertedValue = currentValue
-        .replace('×', '*')
-        .replace('÷', '/')
-        .replace('%', '*0.01');
+        const convertedValue = currentValue
+            .replace('×', '*')
+            .replace('÷', '/')
+            .replace('%', '*0.01')
+            .replace('sin', 'Math.sin')
+            .replace('cos', 'Math.cos')
+            .replace('In', 'Math.log')
+            .replace('π', 'Math.PI')
+            .replace('log', 'Math.log')
+            .replace('e', 'Math.E')
+            .replace('tan', 'Math.tan')
+            .replace('√', 'Math.sqrt')
 
-      const result = eval(convertedValue);
-      currentValue = result.toString();
-      display.value = currentValue;
+
+        const result = eval(convertedValue);
+        currentValue = result.toString();
+        display.value = currentValue;
     }
 
     for (let i = 0; i < buttons.length; i++) {
-      const button = buttons[i];
-      button.addEventListener('click', function () {
-        const value = button.innerText;
+        const button = buttons[i];
+        button.addEventListener('click', function () {
+            const value = button.innerText;
 
-        if (value == 'AC') {
-          currentValue = '';
-          display.value = currentValue;
-        } else if (value == '=') {
-          evaluateResult();
-        }
+            try {
+                if (value == 'AC') {
+                    currentValue = '';
+                    display.value = currentValue;
+                } else if (value == '=') {
+                    evaluateResult();
+                }
+                else {
+                    currentValue += value
+                    display.value = currentValue;
+                }
+            } catch (error) {
+                console.error(error);
+                currentValue = "EROOR";
+                display.value = currentValue;
+            }
 
-        else {
-          currentValue += value
-          display.value = currentValue;
-        }
 
 
 
-      })
+
+
+        })
 
     }
 
-  });
+});
